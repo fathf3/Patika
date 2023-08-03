@@ -1,13 +1,16 @@
 ﻿
 
 
+using System.Collections.Generic;
+using System;
+
 Vote();
 
 void Vote()
 {
     User user = new User();
     Console.Write("Lütfen Kullanıcı Adınızı Giriniz: ");
-    tryVote:
+tryVote:
     Console.WriteLine("Oy Kullanmak icin Secim Yapınız");
 
 
@@ -24,7 +27,7 @@ void Vote()
     if (InMemoryDB.users.Any(u => u.UserName == userName))
     {
         user = InMemoryDB.users.First(u => u.UserName == userName);
-        if(user.isVoted == false)
+        if (user.isVoted == false)
         {
             InMemoryDB.categories.Any(i => i.Id == secim);
             var category = InMemoryDB.categories.FirstOrDefault(c => c.Id == secim);
@@ -38,13 +41,13 @@ void Vote()
     }
     else
     {
-       
+
         Console.WriteLine("Boyle bir kullanici bulunamadi");
         Console.WriteLine("Lutfen kayit olun");
-        tryNewUserName:
+    tryNewUserName:
         Console.Write("Kullanici Adı : ");
         string newUserName = Console.ReadLine();
-        if(InMemoryDB.users.Any(i => i.UserName == newUserName))
+        if (InMemoryDB.users.Any(i => i.UserName == newUserName))
         {
             Console.WriteLine("Kullanıcı adı daha once alinmis, tekrar deneyiniz");
             goto tryNewUserName;
@@ -74,9 +77,9 @@ void Result()
     Console.WriteLine("Toplam Oy : " + toplamOy);
     foreach (Category categoryItem in InMemoryDB.categories)
     {
-        
-        double yuzde = (100 *(categoryItem.VoteCount / toplamOy));
-        Console.WriteLine(categoryItem.Name + " oy oranı : %" +yuzde);
+
+        double yuzde = (100 * (categoryItem.VoteCount / toplamOy));
+        Console.WriteLine(categoryItem.Name + " oy oranı : %" + yuzde);
 
     }
 }
@@ -87,7 +90,7 @@ class User
 
     public string UserName { get; set; }
     public bool isVoted { get; set; } = false;
-   
+
 }
 
 class Category
@@ -110,7 +113,7 @@ class InMemoryDB
             new Category{Id=1,Name="Spor",VoteCount=0},
             new Category{Id=2,Name="Komedi",VoteCount=0},
             new Category{Id=3,Name="Aksiyon",VoteCount=0},
-          
+
         };
 
         _users = new()
@@ -121,13 +124,12 @@ class InMemoryDB
             new User{UserName="a"},
             new User{UserName="b"},
             new User{UserName="ahmet",isVoted=true},
-            
+
         };
     }
     public static List<Category> categories => _categories;
     public static List<User> users => _users;
 }
-
 
 
 
